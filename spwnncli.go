@@ -31,7 +31,7 @@ func percentage(val float64) int {
 
 func printResults(word string, results []spwnn.SpwnnResult) {
 	for _, result := range results {
-		fmt.Printf("  %d%%\t%s\n", percentage(result.Score), result.Word)
+		fmt.Printf("  %d%%\t%d\t%s\n", percentage(result.Score), result.LenDiff, result.Word)
 	}
 }
 
@@ -51,7 +51,8 @@ func validate(dict *spwnn.SpwnnDictionary, letters string, noisy bool) {
 		testLetter := fmt.Sprintf("%c", word[testLetterIndex])
 		if strings.ContainsAny(testLetter, letters) {
 			correctedWords, _ := spwnn.CorrectSpelling(dict, word)
-			if noisy && !wordPresent(word, correctedWords) {
+			if noisy && word != correctedWords[0].Word {
+				//if noisy && !wordPresent(word, correctedWords) {
 				fmt.Printf("Validation:  '%s' miscorrected to '%v'\n", word, correctedWords)
 			}
 		}
