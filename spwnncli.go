@@ -144,16 +144,17 @@ func releaseDict(dict *spwnn.SpwnnDictionary) {
 var tokens = make(chan int, runtime.GOMAXPROCS(0))
 
 func goCorrectSpelling(word string, noisy bool) {
-	start := time.Now()
+	//start := time.Now()
 
 	dict := getDict()
 	correctedWords, _ := spwnn.CorrectSpelling(dict, word)
 
-	if noisy {
-		fmt.Printf("%s: %s\n", word, time.Since(start))
-	}
-	if !wordPresent(word, correctedWords) {
-		fmt.Printf("Validation:  '%s' miscorrected to '%v'\n", word, correctedWords)
+	//if noisy {
+	//	fmt.Printf("%s: %s\n", word, time.Since(start))
+	//}
+	//if !wordPresent(word, correctedWords) {
+	if noisy && word != correctedWords[0].Word {
+		fmt.Printf("Parallel validation:  '%s' miscorrected to '%v'\n", word, correctedWords)
 	}
 
 	// Let next go routine run
@@ -213,7 +214,7 @@ func handleCommand(dict *spwnn.SpwnnDictionary, input string) {
 		os.Exit(0)
 
 	case cmd == 'g':
-		benchmarkParallel(spwnn.GetWords(dict), input, false)
+		benchmarkParallel(spwnn.GetWords(dict), input, true)
 
 	case cmd == 'm':
 		maxSize := spwnn.MaxIndexSize(dict)
