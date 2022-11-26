@@ -526,6 +526,25 @@ Command or word:
 c6g.16xlarge
 go version go1.18.6 linux/arm64
 
+[ec2-user@ip-172-31-86-220 spwnncli]$ ./spwnncli
+.................................................
+49167 words in dictionary
+
+Command or word: -g
+Letters = 'abcdefghijklmnopqrstuvwxyz'; noisy = true
+Parallel validation:  '_bringing_' miscorrected to '[{1 0 _bridging_} {1 0 _bringing_}]'
+Parallel validation:  '_contented_' miscorrected to '[{1 0 _consented_} {1 0 _contended_} {1 0 _contented_} {1 3 _concentrated_}]'
+Parallel validation:  '_descendent_' miscorrected to '[{1 0 _descendant_} {1 0 _descendent_}]'
+Parallel validation:  '_intended_' miscorrected to '[{1 0 _indented_} {1 0 _intended_}]'
+Parallel validation:  '_microeconomics_' miscorrected to '[{1 0 _macroeconomics_} {1 0 _microeconomics_}]'
+Parallel validation:  '_ratification_' miscorrected to '[{1 0 _ramification_} {1 0 _ratification_}]'
+Parallel validation:  '_ringing_' miscorrected to '[{1 0 _rigging_} {1 0 _ringing_} {1 4 _registering_}]'
+Parallel validation:  '_tinting_' miscorrected to '[{1 0 _tenting_} {1 0 _tinting_} {1 1 _taunting_} {1 3 _tormenting_} {1 6 _transplanting_}]'
+Parallel validation:  '_unintended_' miscorrected to '[{1 0 _unindented_} {1 0 _unintended_}]'
+Elapsed time 8.611270182s; GOMAXPROCS 64
+
+Command or word:
+
 
 [ec2-user@ip-172-31-86-220 spwnncli]$ ./spwnncli
 .................................................................................................................................................................................................................................................................................................................................................................................
