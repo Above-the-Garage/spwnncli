@@ -35,73 +35,6 @@ func printResults(word string, results []spwnn.SpwnnResult) {
 	}
 }
 
-// Validate checks that all words correct to themselves - serial version
-// Prints those that don't
-func validate(dict *spwnn.SpwnnDictionary, letters string, noisy bool) {
-	letters = spwnn.RemoveSpaces(letters)
-	if len(letters) == 0 {
-		letters = "abcdefghijklmnopqrstuvwxyz"
-	}
-	fmt.Printf("Letters = '%s'; noisy = %v\n", letters, noisy)
-	for _, word := range spwnn.GetWords(dict) {
-		testLetterIndex := 0
-		if word[0] == '_' {
-			testLetterIndex++
-		}
-		testLetter := fmt.Sprintf("%c", word[testLetterIndex])
-		if strings.ContainsAny(testLetter, letters) {
-			correctedWords, _ := spwnn.CorrectSpelling(dict, word)
-			if noisy && word != correctedWords[0].Word {
-				//if noisy && !wordPresent(word, correctedWords) {
-				fmt.Printf("Validation:  '%s' miscorrected to '%v'\n", word, correctedWords)
-			}
-		}
-	}
-}
-
-// checkForTies checks that all words correct to themselves - serial version
-// Counts number of errors
-func checkForTies(dict *spwnn.SpwnnDictionary, letters string, noisy bool) {
-	letters = spwnn.RemoveSpaces(letters)
-	if len(letters) == 0 {
-		letters = "abcdefghijklmnopqrstuvwxyz"
-	}
-	fmt.Printf("Letters = '%s'; noisy = %v\n", letters, noisy)
-	totalWordsTied := 0
-	totalTies := 0
-	for _, word := range spwnn.GetWords(dict) {
-		testLetterIndex := 0
-		if word[0] == '_' {
-			testLetterIndex++
-		}
-		testLetter := fmt.Sprintf("%c", word[testLetterIndex])
-		if strings.ContainsAny(testLetter, letters) {
-			correctedWords, _ := spwnn.CorrectSpelling(dict, word)
-			numResults := len(correctedWords)
-			if numResults > 1 {
-				totalWordsTied++
-				totalTies = totalTies + numResults
-				if noisy {
-					fmt.Printf("Validation:  '%s' tied (%d): '%v'\n", word, numResults, correctedWords)
-				}
-			}
-		}
-	}
-	fmt.Printf("Total Words Tied: %d; Total Ties: %d\n", totalWordsTied, totalTies)
-}
-
-// Benchmark prints the time to Validate words that start with the letters provided
-func benchmark(dict *spwnn.SpwnnDictionary, input string) {
-	letters := spwnn.RemoveSpaces(input)
-	if len(letters) == 0 {
-		letters = "abcdefghijklmnopqrstuvwxyz"
-	}
-	start := time.Now()
-	validate(dict, letters, false)
-	elapsed := time.Since(start)
-	fmt.Printf("Elapsed time %s\n", elapsed)
-}
-
 //
 // Parallel version of benchmarking code
 //
@@ -149,12 +82,8 @@ func goCorrectSpelling(word string, noisy bool) {
 	dict := getDict()
 	correctedWords, _ := spwnn.CorrectSpelling(dict, word)
 
-	//if noisy {
-	//	fmt.Printf("%s: %s\n", word, time.Since(start))
-	//}
-	//if !wordPresent(word, correctedWords) {
-	if noisy && word != correctedWords[0].Word {
-		fmt.Printf("Parallel validation:  '%s' miscorrected to '%v'\n", word, correctedWords)
+	if len(correctedWords) != 1 {
+		fmt.Printf("Parallel validation:  '%s' could be '%v'\n", word, correctedWords)
 	}
 
 	// Let next go routine run
@@ -199,15 +128,9 @@ func handleCommand(dict *spwnn.SpwnnDictionary, input string) {
 	}
 
 	cmd := input[0]
-	input = input[1:]
+	input = strings.TrimSpace(input[1:])
 
 	switch {
-
-	case cmd == 'a':
-		spwnn.SetAccuracy(dict, input)
-
-	case cmd == 'b':
-		benchmark(dict, input)
 
 	case cmd == 'e', cmd == 'q':
 		fmt.Printf("Bye!\n")
@@ -226,14 +149,6 @@ func handleCommand(dict *spwnn.SpwnnDictionary, input string) {
 	case cmd == 's':
 		spwnn.PrintIndexSizes(dict)
 
-	case cmd == 't':
-		input = spwnn.RemoveSpaces(input)
-		checkForTies(dict, input, true)
-
-	case cmd == 'v':
-		input = spwnn.RemoveSpaces(input)
-		validate(dict, input, true)
-
 	default:
 		fmt.Printf("say what?\n")
 	}
@@ -241,14 +156,6 @@ func handleCommand(dict *spwnn.SpwnnDictionary, input string) {
 
 func prompt() {
 	fmt.Printf("\nCommand or word: ")
-}
-
-var testDict *spwnn.SpwnnDictionary
-
-// InitDict reads the dictionary; it is exposed here
-// so unit tests can init
-func InitDict() {
-	testDict = spwnn.ReadDictionary(true)
 }
 
 func main() {

@@ -1,0 +1,57 @@
+Command or word: contented
+_c _consented_ +0.100000 0
+_c _contended_ +0.100000 0
+_c _contented_ +0.100000 0
+_c _contested_ +0.100000 0
+
+co _consented_ +0.100000 0
+co _contended_ +0.100000 0
+co _contented_ +0.100000 0
+co _contested_ +0.100000 0
+
+on _consented_ +0.100000 0
+on _contended_ +0.100000 0
+on _contented_ +0.100000 0
+on _contested_ +0.100000 0
+
+nt _consented_ +0.100000 0
+nt _contended_ +0.100000 0
+nt _contented_ +0.100000 0
+nt _contested_ +0.100000 0
+
+te _consented_ +0.100000 0
+te _contended_ +0.100000 0
+te _contented_ +0.100000 0
+te _contested_ +0.100000 0
+
+en _consented_ +0.100000 0
+en _contended_ +0.100000 0
+en _contented_ +0.100000 0
+missing contested
+
+nt _consented_ +0.100000 0
+nt _contended_ +0.100000 0
+nt _contented_ +0.100000 0
+nt _contested_ +0.100000 0
+
+te _consented_ +0.100000 0
+te _contended_ +0.100000 0
+te _contented_ +0.100000 0
+te _contested_ +0.100000 0
+
+ed _consented_ +0.100000 0
+ed _contended_ +0.100000 0
+ed _contented_ +0.100000 0
+ed _contested_ +0.100000 0
+
+d_ _consented_ +0.100000 0
+d_ _contended_ +0.100000 0
+d_ _contented_ +0.100000 0
+d_ _contested_ +0.100000 0
+
+  100%  0       _consented_
+  100%  0       _contended_
+  100%  0       _contented_
+  100%  3       _concentrated_
+
+Words Touched = 43%
