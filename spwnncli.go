@@ -76,11 +76,11 @@ func releaseDict(dict *spwnn.SpwnnDictionary) {
 
 var tokens = make(chan int, runtime.GOMAXPROCS(0))
 
-func goCorrectSpelling(word string, noisy bool) {
+func goCorrectSpelling(word string, noisy bool, strictLen bool) {
 	//start := time.Now()
 
 	dict := getDict()
-	correctedWords, _ := spwnn.CorrectSpelling(dict, word)
+	correctedWords, _ := spwnn.CorrectSpelling(dict, word, strictLen)
 
 	if len(correctedWords) != 1 {
 		fmt.Printf("Parallel validation:  '%s' could be '%v'\n", word, correctedWords)
@@ -108,7 +108,7 @@ func benchmarkParallel(words []string, input string, noisy bool) {
 		testLetter := fmt.Sprintf("%c", word[testLetterIndex])
 		if strings.ContainsAny(testLetter, letters) {
 			tokens <- len(tokens)
-			go goCorrectSpelling(word, noisy)
+			go goCorrectSpelling(word, noisy, true /* strictLen */)
 		}
 	}
 
@@ -166,7 +166,7 @@ func main() {
 	flag.Parse()
 
 	if len(*wordToCorrect) != 0 {
-		correctedWords, _ := spwnn.CorrectSpelling(dict, *wordToCorrect)
+		correctedWords, _ := spwnn.CorrectSpelling(dict, *wordToCorrect, false /* strictLen */)
 		printResults(*wordToCorrect, correctedWords)
 		os.Exit(0)
 	}
@@ -179,7 +179,7 @@ func main() {
 		if input[0] == '-' {
 			handleCommand(dict, input[1:])
 		} else {
-			correctedWords, wordsTouched := spwnn.CorrectSpelling(dict, input)
+			correctedWords, wordsTouched := spwnn.CorrectSpelling(dict, input, false /* strictLen */)
 			printResults(input, correctedWords)
 			fmt.Printf("Words Touched = %d%%\n", percentage(float64(wordsTouched)/float64(spwnn.GetWordCount(dict))))
 		}
