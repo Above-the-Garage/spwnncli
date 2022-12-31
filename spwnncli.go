@@ -176,12 +176,14 @@ func main() {
 	for scanner.Scan() {
 		var input string
 		input = scanner.Text()
-		if input[0] == '-' {
-			handleCommand(dict, input[1:])
-		} else {
-			correctedWords, wordsTouched := spwnn.CorrectSpelling(dict, input, false /* strictLen */)
-			printResults(input, correctedWords)
-			fmt.Printf("Words Touched = %d%%\n", percentage(float64(wordsTouched)/float64(spwnn.GetWordCount(dict))))
+		if len(input) != 0 {
+			if input[0] == '-' {
+				handleCommand(dict, input[1:])
+			} else {
+				correctedWords, wordsTouched := spwnn.CorrectSpelling(dict, input, false /* strictLen */)
+				printResults(input, correctedWords)
+				fmt.Printf("Words Touched = %d%%\n", percentage(float64(wordsTouched)/float64(spwnn.GetWordCount(dict))))
+			}
 		}
 		prompt()
 	}
