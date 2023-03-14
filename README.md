@@ -7,8 +7,8 @@ Here are the commands:
 * Just enter a word and it will print the results and some data
 * -e or -q
   * exit the program
-* -g <optional letters>
-  * run the verification on all words that start with <letters>, or omit it, and do them all
+* -g \<optional letters\>
+  * run the verification on all words that start with \<optional letters\>, or leave it blank and do entire alphabet
 * -m
   * print the maximum size of a neural chain
 * -p xy
