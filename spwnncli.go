@@ -40,8 +40,9 @@ func printResults(word string, results []spwnn.SpwnnResult) {
 //
 
 var (
-	mu    sync.Mutex
-	dicts []*spwnn.SpwnnDictionary
+	mu           sync.Mutex
+	dicts        []*spwnn.SpwnnDictionary
+	dictFilename string
 )
 
 // Manage a set of dictionaries, growing the list on demand
@@ -57,7 +58,7 @@ func getDict() *spwnn.SpwnnDictionary {
 			return res
 		}
 	}
-	newDict := spwnn.ReadDictionary(false)
+	newDict := spwnn.ReadDictionary(dictFilename, false)
 	return newDict
 }
 
@@ -137,7 +138,7 @@ func handleCommand(dict *spwnn.SpwnnDictionary, input string) {
 		os.Exit(0)
 
 	case cmd == 'g':
-		benchmarkParallel(spwnn.GetWords(dict), input, true)
+		benchmarkParallel(dict.Words(), input, true)
 
 	case cmd == 'm':
 		maxSize := spwnn.MaxIndexSize(dict)
@@ -160,10 +161,12 @@ func prompt() {
 
 func main() {
 
-	dict := spwnn.ReadDictionary(true)
-
 	wordToCorrect := flag.String("word", "", "a word to spelling correct")
+	dictFlag := flag.String("dict", "knownWords.txt", "dictionary file to use")
 	flag.Parse()
+
+	dictFilename = *dictFlag
+	dict := spwnn.ReadDictionary(dictFilename, true)
 
 	if len(*wordToCorrect) != 0 {
 		correctedWords, _ := spwnn.CorrectSpelling(dict, *wordToCorrect, false /* strictLen */)
@@ -182,7 +185,7 @@ func main() {
 			} else {
 				correctedWords, wordsTouched := spwnn.CorrectSpelling(dict, input, false /* strictLen */)
 				printResults(input, correctedWords)
-				fmt.Printf("Words Touched = %d%%\n", percentage(float64(wordsTouched)/float64(spwnn.GetWordCount(dict))))
+				fmt.Printf("Words Touched = %d%%\n", percentage(float64(wordsTouched)/float64(dict.WordCount())))
 			}
 		}
 		prompt()
