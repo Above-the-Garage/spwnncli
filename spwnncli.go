@@ -163,10 +163,16 @@ func main() {
 
 	wordToCorrect := flag.String("word", "", "a word to spelling correct")
 	dictFlag := flag.String("dict", "knownWords.txt", "dictionary file to use")
+	testFlag := flag.Bool("test", false, "run self-test (each word should correct to itself)")
 	flag.Parse()
 
 	dictFilename = *dictFlag
 	dict := spwnn.ReadDictionary(dictFilename, true)
+
+	if *testFlag {
+		benchmarkParallel(dict.Words(), "", true)
+		os.Exit(0)
+	}
 
 	if len(*wordToCorrect) != 0 {
 		correctedWords, _ := spwnn.CorrectSpelling(dict, *wordToCorrect, false /* strictLen */)
