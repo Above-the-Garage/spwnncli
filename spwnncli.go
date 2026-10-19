@@ -159,6 +159,59 @@ func prompt() {
 	fmt.Printf("\nCommand or word: ")
 }
 
+// A misspelling that should correct to one dictionary word.
+type misspellingCase struct {
+	typo     string
+	expected string
+}
+
+// Typos whose only best match is the intended word.
+// Dropped letters, extra letters, and swapped letters are all represented.
+func misspellingCases() []misspellingCase {
+	return []misspellingCase{
+		{"ontemplation", "contemplation"},
+		{"templation", "contemplation"},
+		{"conteplation", "contemplation"},
+		{"contemplationn", "contemplation"},
+		{"seperate", "separate"},
+		{"occassion", "occasion"},
+		{"occurence", "occurrence"},
+		{"accomodate", "accommodate"},
+		{"necesary", "necessary"},
+		{"enviroment", "environment"},
+		{"goverment", "government"},
+		{"tommorow", "tomorrow"},
+		{"begining", "beginning"},
+		{"calender", "calendar"},
+		{"arguement", "argument"},
+		{"experiance", "experience"},
+		{"libary", "library"},
+		{"mispell", "misspell"},
+		{"writting", "writing"},
+		{"suprise", "surprise"},
+	}
+}
+
+// checkMisspellings reports typos that do not correct to exactly the intended word.
+func checkMisspellings(dict *spwnn.SpwnnDictionary) int {
+	cases := misspellingCases()
+	failed := 0
+	fmt.Printf("Misspellings that should correct to one word:\n")
+	for _, c := range cases {
+		want := "_" + c.expected + "_"
+		results, _ := spwnn.CorrectSpelling(dict, c.typo, false /* strictLen */)
+		if len(results) == 1 && results[0].Word == want {
+			fmt.Printf("  ok    %s -> %s  %d%%\n", c.typo, results[0].Word, percentage(results[0].Score))
+			continue
+		}
+		failed++
+		fmt.Printf("  FAIL  %s expected %s\n", c.typo, want)
+		printResults(c.typo, results)
+	}
+	fmt.Printf("Misspellings: %d checked, %d failed\n", len(cases), failed)
+	return failed
+}
+
 func main() {
 
 	wordToCorrect := flag.String("word", "", "a word to spelling correct")
@@ -170,7 +223,11 @@ func main() {
 	dict := spwnn.ReadDictionary(dictFilename, true)
 
 	if *testFlag {
+		failed := checkMisspellings(dict)
 		benchmarkParallel(dict.Words(), "", true)
+		if failed != 0 {
+			os.Exit(1)
+		}
 		os.Exit(0)
 	}
 
