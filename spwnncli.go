@@ -43,6 +43,8 @@ var (
 	mu           sync.Mutex
 	dicts        []*spwnn.SpwnnDictionary
 	dictFilename string
+	scoring      spwnn.PairScoring
+	lengthMatch  spwnn.LengthMatch
 )
 
 // Manage a set of dictionaries, growing the list on demand
@@ -77,11 +79,11 @@ func releaseDict(dict *spwnn.SpwnnDictionary) {
 
 var tokens = make(chan int, runtime.GOMAXPROCS(0))
 
-func goCorrectSpelling(word string, noisy bool, strictLen bool) {
+func goCorrectSpelling(word string, noisy bool) {
 	//start := time.Now()
 
 	dict := getDict()
-	correctedWords, _ := spwnn.CorrectSpelling(dict, word, strictLen)
+	correctedWords, _ := spwnn.CorrectSpelling(dict, word, lengthMatch, scoring)
 
 	if len(correctedWords) != 1 {
 		fmt.Printf("Parallel validation:  '%s' could be '%v'\n", word, correctedWords)
@@ -109,7 +111,7 @@ func benchmarkParallel(words []string, input string, noisy bool) {
 		testLetter := fmt.Sprintf("%c", word[testLetterIndex])
 		if strings.ContainsAny(testLetter, letters) {
 			tokens <- len(tokens)
-			go goCorrectSpelling(word, noisy, true /* strictLen */)
+			go goCorrectSpelling(word, noisy)
 		}
 	}
 
@@ -153,6 +155,17 @@ func handleCommand(dict *spwnn.SpwnnDictionary, input string) {
 	default:
 		fmt.Printf("say what?\n")
 	}
+}
+
+// flagWasSet reports whether the named flag was given on the command line
+func flagWasSet(name string) bool {
+	set := false
+	flag.Visit(func(f *flag.Flag) {
+		if f.Name == name {
+			set = true
+		}
+	})
+	return set
 }
 
 func prompt() {
@@ -199,7 +212,7 @@ func checkMisspellings(dict *spwnn.SpwnnDictionary) int {
 	fmt.Printf("Misspellings that should correct to one word:\n")
 	for _, c := range cases {
 		want := "_" + c.expected + "_"
-		results, _ := spwnn.CorrectSpelling(dict, c.typo, false /* strictLen */)
+		results, _ := spwnn.CorrectSpelling(dict, c.typo, spwnn.AnyLength, scoring)
 		if len(results) == 1 && results[0].Word == want {
 			fmt.Printf("  ok    %s -> %s  %d%%\n", c.typo, results[0].Word, percentage(results[0].Score))
 			continue
@@ -216,8 +229,29 @@ func main() {
 
 	wordToCorrect := flag.String("word", "", "a word to spelling correct")
 	dictFlag := flag.String("dict", "knownWords.txt", "dictionary file to use")
+	lengthFlag := flag.String("length", "any", "which winners to keep: any length, or the same length as the input")
+	scoringFlag := flag.String("scoring", "capped", "how repeated letter pairs are scored: capped or original")
 	testFlag := flag.Bool("test", false, "run self-test (each word should correct to itself)")
 	flag.Parse()
+
+	var err error
+	scoring, err = parseScoring(*scoringFlag)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(2)
+	}
+	lengthMatch, err = parseLength(*lengthFlag)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(2)
+	}
+	// The self-test expects exactly one winner per word, so it has always
+	// kept only same-length words; do that unless -length was given.
+	if *testFlag && !flagWasSet("length") {
+		lengthMatch = spwnn.SameLength
+		*lengthFlag = "same"
+	}
+	fmt.Printf("Pair scoring: %s; length match: %s\n", *scoringFlag, *lengthFlag)
 
 	dictFilename = *dictFlag
 	dict := spwnn.ReadDictionary(dictFilename, true)
@@ -232,7 +266,7 @@ func main() {
 	}
 
 	if len(*wordToCorrect) != 0 {
-		correctedWords, _ := spwnn.CorrectSpelling(dict, *wordToCorrect, false /* strictLen */)
+		correctedWords, _ := spwnn.CorrectSpelling(dict, *wordToCorrect, lengthMatch, scoring)
 		printResults(*wordToCorrect, correctedWords)
 		os.Exit(0)
 	}
@@ -246,7 +280,7 @@ func main() {
 			if input[0] == '-' {
 				handleCommand(dict, input[1:])
 			} else {
-				correctedWords, wordsTouched := spwnn.CorrectSpelling(dict, input, false /* strictLen */)
+				correctedWords, wordsTouched := spwnn.CorrectSpelling(dict, input, lengthMatch, scoring)
 				printResults(input, correctedWords)
 				fmt.Printf("Words Touched = %d%%\n", percentage(float64(wordsTouched)/float64(dict.WordCount())))
 			}
@@ -254,4 +288,26 @@ func main() {
 		prompt()
 	}
 	os.Exit(0)
+}
+
+// parseScoring converts the -scoring flag text to a spwnn.PairScoring
+func parseScoring(name string) (spwnn.PairScoring, error) {
+	switch name {
+	case "capped":
+		return spwnn.CappedPairs, nil
+	case "original":
+		return spwnn.OriginalPairs, nil
+	}
+	return spwnn.CappedPairs, fmt.Errorf("unknown scoring %q (want capped or original)", name)
+}
+
+// parseLength converts the -length flag text to a spwnn.LengthMatch
+func parseLength(name string) (spwnn.LengthMatch, error) {
+	switch name {
+	case "any":
+		return spwnn.AnyLength, nil
+	case "same":
+		return spwnn.SameLength, nil
+	}
+	return spwnn.AnyLength, fmt.Errorf("unknown length %q (want any or same)", name)
 }
