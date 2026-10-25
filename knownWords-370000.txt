@@ -4876,7 +4876,6 @@ aeon
 aeonial
 aeonian
 aeonic
-aeonicaeonist
 aeonist
 aeons
 aepyceros
@@ -8268,7 +8267,7 @@ aligreek
 alii
 aliya
 aliyah
-aliyahaliyahs
+aliyahs
 aliyas
 aliyos
 aliyoth
@@ -40756,7 +40755,6 @@ brigands
 brigantes
 brigantia
 brigantine
-brigantinebrigantines
 brigantines
 brigatry
 brigbote
@@ -62088,7 +62086,8 @@ coevals
 coevolution
 coevolutionary
 coevolve
-coevolvedcoevolves
+coevolved
+coevolves
 coevolving
 coexchangeable
 coexclusive
@@ -80369,7 +80368,6 @@ demarcating
 demarcation
 demarcations
 demarcator
-demarcatordemarcators
 demarcators
 demarcature
 demarch
@@ -102476,7 +102474,7 @@ epigonism
 epigonium
 epigonos
 epigonous
-epigonousepigons
+epigons
 epigonus
 epigram
 epigrammatarian
@@ -125175,7 +125173,6 @@ gyne
 gyneccia
 gynecia
 gynecic
-gynecicgynecidal
 gynecidal
 gynecide
 gynecium
@@ -164092,7 +164089,6 @@ keslep
 kesse
 kesslerman
 kestrel
-kestrelkestrels
 kestrels
 ket
 keta
@@ -196438,7 +196434,6 @@ nabobishly
 nabobism
 nabobisms
 nabobry
-nabobrynabobs
 nabobs
 nabobship
 naboth
@@ -217867,7 +217862,7 @@ outwardly
 outwardmost
 outwardness
 outwards
-outwardsoutwarred
+outwarred
 outwarring
 outwars
 outwash
@@ -231750,7 +231745,6 @@ peroxide
 peroxided
 peroxides
 peroxidic
-peroxidicperoxiding
 peroxiding
 peroxidize
 peroxidized
@@ -247969,7 +247963,8 @@ preinfect
 preinfection
 preinfer
 preinference
-preinferredpreinferring
+preinferred
+preinferring
 preinflection
 preinflectional
 preinflict
@@ -303512,7 +303507,6 @@ steganopodes
 steganopodous
 stegh
 stegnosis
-stegnosisstegnotic
 stegnotic
 stegocarpous
 stegocephalia
@@ -306980,7 +306974,7 @@ sturble
 sturdy
 sturdied
 sturdier
-sturdiersturdies
+sturdies
 sturdiest
 sturdyhearted
 sturdily
@@ -309393,7 +309387,6 @@ subsultive
 subsultory
 subsultorily
 subsultorious
-subsultorysubsultus
 subsultus
 subsumable
 subsume

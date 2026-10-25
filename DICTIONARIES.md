@@ -22,8 +22,8 @@ are the cleanest input.
 | knownWords-49000.txt | 49,167 | 448,261 | as above | knownWords.txt |
 | knownWords-23000.txt | 23,115 | 200,777 | mixed case, LF, 307 with `'`, 22 with Latin-1 accented bytes | american.sml+.mwl minus affix flags |
 | american.sml+.mwl | 23,115 | 269,976 | ispell munched list (`word/FLAGS`), mixed case, Latin-1 | |
-| knownWords-370000.txt | 370,103 | 3,864,812 | lowercase a-z only, LF, no trailing newline | dwyl-english-words-words_alpha.txt |
-| dwyl-english-words-words_alpha.txt | 370,103 | 3,864,812 | as above | knownWords-370000.txt |
+| knownWords-370000.txt | 370,096 | 3,864,619 | lowercase a-z only, LF, no trailing newline | (dwyl words_alpha minus 15 concatenations, see below) |
+| dwyl-english-words-words_alpha.txt | 370,103 | 3,864,812 | as above | |
 | knownWords-scowl60.txt | 87,780 | 815,351 | lowercase a-z only, LF, sorted, unique | |
 | knownWords-scowl70.txt | 127,770 | 1,220,221 | lowercase a-z only, LF, sorted, unique | |
 | knownWords-shakespeare.txt | 12,878 | 104,136 | lowercase, LF; 755 entries with non a-z (hyphens such as `a-bed`, `&c`, `3`) | tinyshakespeare-words-sorted-cleaned-uniq.txt |
@@ -87,7 +87,17 @@ Identical pairs were verified with `cmp`.
   that "Copyright still belongs to them". The spwnn README says "from aspell",
   which doesn't match dwyl's own account.
 * **Added to repo (Fact):** 2022-11-22. knownWords-370000.txt was split out in
-  8626ba0 the same day; the two are byte-identical.
+  8626ba0 the same day; the two were byte-identical until 2026-10-24.
+* **Edited (Fact):** on 2026-10-24, 15 words in knownWords-370000.txt that were
+  two words run together (aeonicaeonist, aliyahaliyahs, brigantinebrigantines,
+  coevolvedcoevolves, demarcatordemarcators, epigonousepigons, gynecicgynecidal,
+  kestrelkestrels, nabobrynabobs, outwardsoutwarred, peroxidicperoxiding,
+  preinferredpreinferring, stegnosisstegnotic, sturdiersturdies,
+  subsultorysubsultus) were split back into their halves. Halves already in the
+  list were not re-added; the 8 new words are aliyahs, coevolved, coevolves,
+  epigons, outwarred, preinferred, preinferring and sturdies. Many look like a
+  dictionary page's two guide words joined. dwyl-english-words-words_alpha.txt
+  is left unchanged as the original.
 * **Snapshot date (Best guess):** compared with upstream on 2026-10-24, this copy
   still has `acceleratorh` (removed upstream 2020-08-24), has `cryptocurrency`
   (added 2020-04-10), and lacks `nerdy`/`abled` (added April 2022) and `cyber`
