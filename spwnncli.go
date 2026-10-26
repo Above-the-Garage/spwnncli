@@ -225,12 +225,53 @@ func checkMisspellings(dict *spwnn.SpwnnDictionary) int {
 	return failed
 }
 
+// crayCrayCases are horribly misspelled words that still find the intended word.
+func crayCrayCases() []misspellingCase {
+	return []misspellingCase{
+		{"anthropolojikal", "anthropological"},
+		{"sirkumstanses", "circumstances"},
+		{"sirkumferense", "circumference"},
+		{"enntrepranoor", "entrepreneur"},
+		{"ekspeeriense", "experience"},
+		{"kommunikashun", "communication"},
+		{"rekomendashun", "recommendation"},
+		{"mathamatishun", "mathematician"},
+		{"konshusness", "consciousness"},
+		{"enviromint", "environment"},
+		{"intelijense", "intelligence"},
+		{"shedjule", "schedule"},
+		{"restront", "restraint"},
+		{"prawnunseeashun", "pronunciation"},
+	}
+}
+
+// runCrayCray shows how each horrible misspelling fares: "only" when the
+// intended word is the single winner, "tie" when it shares the top score,
+// and "miss" when it is not among the winners.
+func runCrayCray(dict *spwnn.SpwnnDictionary) {
+	fmt.Printf("Horrible misspellings:\n")
+	for _, c := range crayCrayCases() {
+		want := "_" + c.expected + "_"
+		results, _ := spwnn.CorrectSpelling(dict, c.typo, lengthMatch, scoring)
+		status := "miss"
+		if wordPresent(want, results) {
+			status = "tie"
+			if len(results) == 1 {
+				status = "only"
+			}
+		}
+		fmt.Printf("  %-5s %s -> %s\n", status, c.typo, want)
+		printResults(c.typo, results)
+	}
+}
+
 func main() {
 
-	wordToCorrect := flag.String("word", "", "correct one word and exit; without -word or -test, reads words interactively from stdin")
+	wordToCorrect := flag.String("word", "", "correct one word and exit; without -word, -test or -craycray, reads words interactively from stdin")
 	dictFlag := flag.String("dict", "knownWords.txt", "dictionary file to use")
 	lengthFlag := flag.String("length", "any", "'any' keeps best matches of any length; 'same' keeps only those the same length as -word")
 	scoringFlag := flag.String("scoring", "capped", "'capped' credits each letter pair at most as often as the dictionary word has it; 'original' credits every repeat")
+	crayCrayFlag := flag.Bool("craycray", false, "run a set of horribly misspelled words and show what each one finds")
 	testFlag := flag.Bool("test", false, "run self-test on -dict: each word should correct to itself (uses -length same unless -length is given)")
 	flag.Parse()
 
@@ -257,6 +298,11 @@ func main() {
 	loadStart := time.Now()
 	dict := spwnn.ReadDictionary(dictFilename)
 	fmt.Printf("%d words in dictionary, loaded in %v\n", dict.WordCount(), time.Since(loadStart).Round(time.Millisecond))
+
+	if *crayCrayFlag {
+		runCrayCray(dict)
+		os.Exit(0)
+	}
 
 	if *testFlag {
 		failed := checkMisspellings(dict)
