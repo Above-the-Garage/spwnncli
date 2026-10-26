@@ -227,11 +227,11 @@ func checkMisspellings(dict *spwnn.SpwnnDictionary) int {
 
 func main() {
 
-	wordToCorrect := flag.String("word", "", "a word to spelling correct")
+	wordToCorrect := flag.String("word", "", "correct one word and exit; without -word or -test, reads words interactively from stdin")
 	dictFlag := flag.String("dict", "knownWords.txt", "dictionary file to use")
-	lengthFlag := flag.String("length", "any", "which winners to keep: any length, or the same length as the input")
-	scoringFlag := flag.String("scoring", "capped", "how repeated letter pairs are scored: capped or original")
-	testFlag := flag.Bool("test", false, "run self-test (each word should correct to itself)")
+	lengthFlag := flag.String("length", "any", "'any' keeps best matches of any length; 'same' keeps only those the same length as -word")
+	scoringFlag := flag.String("scoring", "capped", "'capped' credits each letter pair at most as often as the dictionary word has it; 'original' credits every repeat")
+	testFlag := flag.Bool("test", false, "run self-test on -dict: each word should correct to itself (uses -length same unless -length is given)")
 	flag.Parse()
 
 	var err error
