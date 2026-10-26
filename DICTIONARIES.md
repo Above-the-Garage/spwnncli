@@ -22,7 +22,7 @@ are the cleanest input.
 | knownWords-49000.txt | 49,167 | 448,261 | as above | knownWords.txt |
 | knownWords-23000.txt | 23,115 | 200,777 | mixed case, LF, 307 with `'`, 22 with Latin-1 accented bytes | american.sml+.mwl minus affix flags |
 | american.sml+.mwl | 23,115 | 269,976 | ispell munched list (`word/FLAGS`), mixed case, Latin-1 | |
-| knownWords-370000.txt | 370,096 | 3,864,619 | lowercase a-z only, LF, no trailing newline | (dwyl words_alpha minus 15 concatenations, see below) |
+| knownWords-370000.txt | 370,074 | 3,864,231 | lowercase a-z only, LF, no trailing newline | (dwyl words_alpha minus 41 concatenations, see below) |
 | dwyl-english-words-words_alpha.txt | 370,103 | 3,864,812 | as above | |
 | knownWords-scowl60.txt | 87,780 | 815,351 | lowercase a-z only, LF, sorted, unique | |
 | knownWords-scowl70.txt | 127,770 | 1,220,221 | lowercase a-z only, LF, sorted, unique | |
@@ -98,6 +98,17 @@ Identical pairs were verified with `cmp`.
   epigons, outwarred, preinferred, preinferring and sturdies. Many look like a
   dictionary page's two guide words joined. dwyl-english-words-words_alpha.txt
   is left unchanged as the original.
+* **Edited (Fact):** on 2026-10-26, 26 more glued-together words were removed
+  after checking each against Wiktionary and Webster's 2nd: regeneratoryregeneratress,
+  preobtrudingpreobtrusion, snailfishessnailflower, affusedaffusing,
+  acerbityacerose, borasqueborate, footmenfootpad, lamedlamella,
+  legantinelegatary, pitmenpitmirk, slewingslews, photphotonegative,
+  paucitypause, receptionreck, recenserecit, uniprocessorunix,
+  squirrelsstagnate, selectivitysenescence, americanumancestors,
+  zilchviticetum, overthwartarchaic, angelinformal, exauthorizeexc,
+  caducecaducean, greggriffin and burgheristh. The 4 new words are
+  preobtruding, snailfishes, affused and affusing; fragments like "exc",
+  "isth" and "caduce" and labels like "archaic" were not added.
 * **Snapshot date (Best guess):** compared with upstream on 2026-10-24, this copy
   still has `acceleratorh` (removed upstream 2020-08-24), has `cryptocurrency`
   (added 2020-04-10), and lacks `nerdy`/`abled` (added April 2022) and `cyber`

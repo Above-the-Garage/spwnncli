@@ -1955,7 +1955,6 @@ acerbest
 acerbic
 acerbically
 acerbity
-acerbityacerose
 acerbities
 acerbitude
 acerbly
@@ -5517,7 +5516,8 @@ affrontment
 affronts
 afft
 affuse
-affusedaffusing
+affused
+affusing
 affusion
 affusions
 afghan
@@ -10314,7 +10314,6 @@ americanly
 americanoid
 americans
 americanum
-americanumancestors
 americas
 americaward
 americawards
@@ -12683,7 +12682,6 @@ angelim
 angelin
 angelina
 angeline
-angelinformal
 angelique
 angelito
 angelize
@@ -38338,7 +38336,6 @@ boras
 borasca
 borasco
 borasque
-borasqueborate
 borassus
 borate
 borated
@@ -43074,7 +43071,6 @@ burgherage
 burgherdom
 burgheress
 burgherhood
-burgheristh
 burghermaster
 burghers
 burghership
@@ -44375,7 +44371,6 @@ caduac
 caduca
 caducary
 caducean
-caducecaducean
 caducecei
 caducei
 caduceus
@@ -106528,7 +106523,6 @@ exauguration
 exaun
 exauthorate
 exauthorize
-exauthorizeexc
 excalate
 excalation
 excalcarate
@@ -116213,7 +116207,6 @@ footmanship
 footmark
 footmarks
 footmen
-footmenfootpad
 footnote
 footnoted
 footnotes
@@ -129657,7 +129650,6 @@ grege
 gregg
 gregge
 greggle
-greggriffin
 grego
 gregor
 gregory
@@ -167623,7 +167615,6 @@ lamebrains
 lamed
 lamedh
 lamedhs
-lamedlamella
 lameds
 lameduck
 lamel
@@ -170027,7 +170018,6 @@ legally
 legalness
 legals
 legantine
-legantinelegatary
 legatary
 legate
 legated
@@ -221586,7 +221576,6 @@ overthrown
 overthrows
 overthrust
 overthwart
-overthwartarchaic
 overthwartly
 overthwartness
 overthwartways
@@ -228072,7 +228061,6 @@ paucispiral
 paucispirated
 paucity
 paucities
-paucitypause
 paughty
 pauky
 paukpan
@@ -235463,7 +235451,6 @@ photozincography
 photozincographic
 photozincotype
 photozincotypy
-photphotonegative
 phots
 photuria
 phousdar
@@ -238392,7 +238379,6 @@ pitman
 pitmans
 pitmark
 pitmen
-pitmenpitmirk
 pitmirk
 pitocin
 pitometer
@@ -248604,7 +248590,7 @@ preobtain
 preobtainable
 preobtrude
 preobtruded
-preobtrudingpreobtrusion
+preobtruding
 preobtrusion
 preobtrusive
 preobviate
@@ -262697,7 +262683,6 @@ recementation
 recency
 recencies
 recense
-recenserecit
 recension
 recensionist
 recensor
@@ -262732,7 +262717,6 @@ reception
 receptionism
 receptionist
 receptionists
-receptionreck
 receptions
 receptitious
 receptive
@@ -265584,7 +265568,6 @@ regenerative
 regeneratively
 regenerator
 regeneratory
-regeneratoryregeneratress
 regenerators
 regeneratress
 regeneratrix
@@ -283444,7 +283427,6 @@ selective
 selectively
 selectiveness
 selectivity
-selectivitysenescence
 selectly
 selectman
 selectmen
@@ -293986,7 +293968,6 @@ slew
 slewed
 slewer
 slewing
-slewingslews
 slews
 slewth
 sly
@@ -295217,7 +295198,7 @@ snaileater
 snailed
 snailery
 snailfish
-snailfishessnailflower
+snailfishes
 snailflower
 snaily
 snailing
@@ -302064,7 +302045,6 @@ squirrellike
 squirrelling
 squirrelproof
 squirrels
-squirrelsstagnate
 squirreltail
 squirt
 squirted
@@ -344954,7 +344934,6 @@ unipotence
 unipotent
 unipotential
 uniprocessor
-uniprocessorunix
 unipulse
 uniquantic
 unique
@@ -369319,7 +369298,6 @@ zikurats
 zila
 zilch
 zilches
-zilchviticetum
 zill
 zilla
 zillah
